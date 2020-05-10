@@ -44,8 +44,8 @@ def error_exception(response: dict) -> Optional[BaseXToolsException]:
     return BaseXToolsException(str(error))
 
 
-def get(path: str):
-    r = requests.get(url(path))
+def get(path: str, params=None):
+    r = requests.get(url(path), params=params)
     response = r.json()
     exception = error_exception(response)
     if exception:
