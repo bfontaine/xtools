@@ -1,20 +1,9 @@
 import requests_mock
 
-from unittest import TestCase
-
-from xtools import base, quote, exceptions
-
-TEST_URL_PREFIX = "m://x"
+from xtools import tests, quote, exceptions
 
 
-class TestProject(TestCase):
-    def setUp(self):
-        self.base_url = base.BASE_URL
-        setattr(base, "BASE_URL", TEST_URL_PREFIX)
-
-    def tearDown(self):
-        setattr(base, "BASE_URL", self.base_url)
-
+class TestProject(tests.TestCase):
     def test_random_quote(self):
         with requests_mock.Mocker() as m:
             m.get("m://x/quote/random", json={"42": "something"})
