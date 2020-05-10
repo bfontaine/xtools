@@ -38,7 +38,8 @@ def error_exception(response: dict) -> Optional[BaseXToolsException]:
 
         return BaseXToolsException(error["message"], code)
 
-    if error.startswith("No matching result"):
+    if error.startswith("No matching result") \
+            or error.endswith("is not a valid project"):
         return NotFound(error)
 
     return BaseXToolsException(str(error))

@@ -3,7 +3,7 @@ import requests_mock
 from xtools import tests, page, exceptions
 
 
-class TestProject(tests.TestCase):
+class TestPage(tests.TestCase):
     def test_simple_info(self):
         for what, fn in (
             ("articleinfo", page.article_info),
