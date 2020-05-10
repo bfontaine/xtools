@@ -9,3 +9,7 @@ class BaseXToolsException(Exception):
 
 class NotFound(BaseXToolsException):
     pass
+
+
+class TooManyEdits(BaseXToolsException):
+    pass
