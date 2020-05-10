@@ -5,3 +5,6 @@ from .quote import random_quote, single_quote, all_quotes
 from .user import (simple_edit_count, number_of_pages_created, pages_created, pages_created_iter,
                    automated_edit_counter,  # ...
                    log_counts, namespace_totals, month_counts, time_card)
+
+
+__version__ = "0.0.1"
