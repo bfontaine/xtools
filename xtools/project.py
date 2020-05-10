@@ -106,7 +106,10 @@ def automated_tools(project: str) -> dict:
           ...
         }
 
+    Note the exact same endpoint exists under ``api/user``.
+
     https://xtools.readthedocs.io/en/stable/api/project.html#automated-tools
+    https://xtools.readthedocs.io/en/stable/api/user.html#automated-tools
 
     :param project:
     :return:
@@ -128,12 +131,12 @@ def _get_project_stats_dict(what: str, project: str,
                             start: Optional[date] = None,
                             end: Optional[date] = None,
                             actions: Optional[Sequence[str]] = None) -> dict:
-    path = "/project/{what}/{project}/{start}/{end}".format(
-        what=what,
-        project=project,
-        start=str(start) if start else "",
-        end=str(end) if end else "",
-    ).rstrip("/")
+    path = base.build_path("/project/{what}/{project}/{start}/{end}", (
+        ("what", what, ""),
+        ("project", project, ""),
+        ("start", start, ""),
+        ("end", end, ""),
+    ))
 
     params = {}
     if actions:

@@ -2,7 +2,7 @@
 Internal base utilities.
 """
 
-from typing import Optional
+from typing import Optional, Tuple, Any, Sequence
 
 import requests
 from .exceptions import BaseXToolsException, NotFound
@@ -52,3 +52,52 @@ def get(path: str, params=None):
     if exception:
         raise exception
     return response
+
+
+def build_path(path_format: str, params: Sequence[Tuple[str, Any, str]]) -> str:
+    """
+    Build a path for the XTools API.
+
+    Examples:
+
+        >>> build_path("/{a}", [("a", "foo", "bar")])
+        "/foo"
+        >>> build_path("/{a}", [("a", "", "bar")])
+        "/bar"
+        >>> build_path("/{a}/{b}/{c}", [("a", "", "x"), ("b", "B", "x"), ("c", "", "x")])
+        "/x/B"
+
+    :param path_format:
+    :param params:
+    :return:
+    """
+    params_dict = {}
+
+    def has_more(index):
+        if index >= len(params):
+            return False
+
+        for _, val, _ in params[index+1:]:
+            if val:
+                return True
+        return False
+
+    for i, (name, value, default) in enumerate(params):
+        if value:
+            param_value = str(value)
+        else:
+            param_value = ""
+
+            if has_more(i):
+                if default:
+                    param_value = default
+                # safe defaults
+                elif name == "start":
+                    param_value = "2000-01-01"
+                elif name == "end":
+                    param_value = "2050-12-31"
+
+        params_dict[name] = param_value
+
+    path = path_format.format(**params_dict).rstrip("/")
+    return path

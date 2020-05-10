@@ -121,13 +121,13 @@ def top_editors(project: str, article: str,
     :param exclude_bots: if True, exclude bots.
     :return:
     """
-    path = "/page/top_editors/{project}/{article}/{start}/{end}/{limit}".format(
-        project=project,
-        article=article,
-        start=str(start) if start else "",
-        end=str(end) if end else "",
-        limit=limit if limit else "",
-    ).rstrip("/")
+    path = base.build_path("/page/top_editors/{project}/{article}/{start}/{end}/{limit}", (
+        ("project", project, ""),
+        ("article", article, ""),
+        ("start", start, ""),
+        ("end", end, ""),
+        ("limit", limit, ""),
+    ))
     params = {}
     if exclude_bots:
         params["nobots"] = "1"
