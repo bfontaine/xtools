@@ -11,3 +11,7 @@ Note this project is not affiliated with nor endorsed by XTools.
 ### Requirements
 
 Python 3.5+.
+
+## Usage
+
+[Read the docs](https://python-xtools.readthedocs.io/en/latest/).
