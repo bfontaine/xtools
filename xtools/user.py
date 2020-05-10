@@ -179,7 +179,14 @@ def pages_created(project: str, username: str,
     # single namespace: {"0": A, "1": B, ...}
     # all namespaces: {"0": [A, B], "1": [C, D, E], ...}
     keys = sorted(pages.keys(), key=int)
-    if isinstance(next(pages.values().__iter__()), list):
+
+    is_namespaced = False
+    try:
+        is_namespaced = isinstance(next(pages.values().__iter__()), list)
+    except StopIteration:
+        pass
+
+    if is_namespaced:
         ret["pages"] = [page for k in keys for page in pages[k]]
     else:
         ret["pages"] = [pages[k] for k in keys]
