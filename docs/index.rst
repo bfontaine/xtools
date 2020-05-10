@@ -3,14 +3,14 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to ``xtools``'s documentation!
-======================================
+Welcome to ``xtools``' documentation!
+=====================================
 
-``xtool`` is a Python wrapper around XTool_’s API.
+``xtools`` is a Python wrapper around XTools_’ API.
 
 Note this project is not affiliated with nor endorsed by XTools.
 
-.. _XTool: https://xtools.wmflabs.org/
+.. _XTools: https://xtools.wmflabs.org/
 
 .. toctree::
    :maxdepth: 2
