@@ -5,9 +5,11 @@ Internal base utilities.
 from typing import Optional, Tuple, Any, Sequence
 
 import requests
-from .exceptions import BaseXToolsException, NotFound
+from .exceptions import BaseXToolsException, NotFound, TooManyEdits
 
 BASE_URL = "https://xtools.wmflabs.org/api"
+START_TIME = "2000-01-01"
+END_TIME = "2050-12-31"
 
 
 def url(path: str) -> str:
@@ -41,6 +43,9 @@ def error_exception(response: dict) -> Optional[BaseXToolsException]:
     if error.startswith("No matching result") \
             or error.endswith("is not a valid project"):
         return NotFound(error)
+
+    if error.startswith("User has made too many edits!"):
+        return TooManyEdits(error)
 
     return BaseXToolsException(str(error))
 
@@ -93,9 +98,9 @@ def build_path(path_format: str, params: Sequence[Tuple[str, Any, str]]) -> str:
                     param_value = default
                 # safe defaults
                 elif name == "start":
-                    param_value = "2000-01-01"
+                    param_value = START_TIME
                 elif name == "end":
-                    param_value = "2050-12-31"
+                    param_value = END_TIME
 
         params_dict[name] = param_value
 
