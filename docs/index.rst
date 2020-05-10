@@ -16,6 +16,17 @@ Note this project is not affiliated with nor endorsed by XTools.
    :maxdepth: 2
    :caption: Contents:
 
+Install
+~~~~~~~
+
+::
+
+   pip install xtools
+
+Usage
+~~~~~
+
+
 ``xtools.project``
 ------------------
 
