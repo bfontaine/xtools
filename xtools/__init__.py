@@ -6,5 +6,6 @@ from .user import (simple_edit_count, number_of_pages_created, pages_created, pa
                    automated_edit_counter,  non_automated_edits, automated_edits,  edit_summaries, top_edits,
                    category_edit_counter, log_counts, namespace_totals, month_counts, time_card)
 
+from .exceptions import BaseXToolsException, NotFound, TooManyEdits
 
 __version__ = "0.0.4"
