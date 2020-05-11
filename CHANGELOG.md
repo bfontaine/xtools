@@ -1,9 +1,11 @@
 # `xtools` Changelog
 
-## Unreleased
+## 0.0.4 (2020/05/11)
 
+* Add full support for the User API
 * Raise a `NotFound` exception instead of `BaseXToolsException` when a user
   doesn’t exist
+* Small docstrings improvements
 
 ## 0.0.3 (2020/05/11)
 

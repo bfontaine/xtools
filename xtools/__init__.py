@@ -7,4 +7,4 @@ from .user import (simple_edit_count, number_of_pages_created, pages_created, pa
                    category_edit_counter, log_counts, namespace_totals, month_counts, time_card)
 
 
-__version__ = "0.0.3"
+__version__ = "0.0.4"
