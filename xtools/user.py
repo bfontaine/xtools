@@ -4,7 +4,7 @@ Endpoints related to users.
 https://xtools.readthedocs.io/en/stable/api/user.html
 """
 
-from typing import Optional, Generator
+from typing import Optional, Generator, Sequence
 from datetime import date
 
 from . import base
@@ -274,12 +274,140 @@ def automated_edit_counter(project: str, username: str,
         ))
     return base.get(path)
 
-# TODO
-# https://xtools.readthedocs.io/en/stable/api/user.html#non-automated-edits
-# https://xtools.readthedocs.io/en/stable/api/user.html#automated-edits
-# https://xtools.readthedocs.io/en/stable/api/user.html#edit-summaries
-# https://xtools.readthedocs.io/en/stable/api/user.html#top-edits
-# https://xtools.readthedocs.io/en/stable/api/user.html#category-edit-counter
+
+def _edits(what: str, project: str, username: str, namespace: str = "0",
+           start: Optional[date] = None,
+           end: Optional[date] = None,
+           offset: Optional[int] = None) -> dict:
+    """
+    Base function for both ``non_automated_edits`` and ``automated_edits``.
+
+    :param what:
+    :param project:
+    :param username:
+    :param namespace: one namespace (default is ``"0"``, the main one) or ``"all"`` for all of them.
+    :param start:
+    :param end:
+    :param offset:
+    :return:
+    """
+    path = base.build_path("/user/{what}/{project}/{username}/{namespace}/{start}/{end}/{offset}", (
+        ("what", what, ""),
+        ("project", project, ""),
+        ("username", username, ""),
+        ("namespace", namespace, ""),
+        ("start", start, ""),
+        ("end", end, ""),
+        ("offset", offset, ""),
+    ))
+    return base.get(path)
+
+
+def non_automated_edits(project: str, username: str, namespace: str = "0",
+                        start: Optional[date] = None,
+                        end: Optional[date] = None,
+                        offset: Optional[int] = None) -> dict:
+    """
+    https://xtools.readthedocs.io/en/stable/api/user.html#non-automated-edits
+
+    :param project:
+    :param username:
+    :param namespace: one namespace (default is ``"0"``, the main one) or ``"all"`` for all of them.
+    :param start:
+    :param end:
+    :param offset:
+    :return:
+    """
+    return _edits("nonautomated_edits", project, username,
+                  namespace=namespace, start=start, end=end, offset=offset)
+
+
+def automated_edits(project: str, username: str, namespace: str = "0",
+                    start: Optional[date] = None,
+                    end: Optional[date] = None,
+                    offset: Optional[int] = None) -> dict:
+    """
+    https://xtools.readthedocs.io/en/stable/api/user.html#automated-edits
+
+    :param project:
+    :param username:
+    :param namespace: one namespace (default is ``"0"``, the main one) or ``"all"`` for all of them.
+    :param start:
+    :param end:
+    :param offset:
+    :return:
+    """
+    return _edits("automated_edits", project, username,
+                  namespace=namespace, start=start, end=end, offset=offset)
+
+
+def edit_summaries(project: str, username: str,
+                   namespace: str = "0",
+                   start: Optional[date] = None,
+                   end: Optional[date] = None) -> dict:
+    """
+    https://xtools.readthedocs.io/en/stable/api/user.html#edit-summaries
+
+    :param project:
+    :param username:
+    :param namespace: one namespace (default is ``"0"``, the main one) or ``"all"`` for all of them.
+    :param start:
+    :param end:
+    :return:
+    """
+    path = base.build_path("/user/edit_summaries/{project}/{username}/{namespace}/{start}/{end}", (
+        ("project", project, ""),
+        ("username", username, ""),
+        ("namespace", namespace, ""),
+        ("start", start, ""),
+        ("end", end, ""),
+    ))
+    return base.get(path)
+
+
+def top_edits(project: str, username: str, namespace: str = "0", page_title: Optional[str] = None) -> dict:
+    """
+    Return the top-edited pages by a user, or all edits made by a user to a specific page.
+
+    https://xtools.readthedocs.io/en/stable/api/user.html#top-edits
+
+    :param project:
+    :param username:
+    :param namespace: one namespace (default is ``"0"``, the main one) or ``"all"`` for all of them.
+    :param page_title: page title. For non-main pages you must either fill the ``namespace`` parameter or set it
+      to a blank string and use the namespace-prefixed article title.
+    :return:
+    """
+    path = base.build_path("/user/top_edits/{project}/{username}/{namespace}/{article}", (
+        ("project", project, ""),
+        ("username", username, ""),
+        ("namespace", namespace, ""),
+        ("article", page_title, ""),
+    ))
+    return base.get(path)
+
+
+def category_edit_counter(project: str, username: str, categories: Sequence[str],
+                          start: Optional[date] = None,
+                          end: Optional[date] = None) -> dict:
+    """
+    https://xtools.readthedocs.io/en/stable/api/user.html#category-edit-counter
+
+    :param project:
+    :param username:
+    :param categories: Categories. The namespace prefix can be omitted.
+    :param start:
+    :param end:
+    :return:
+    """
+    path = base.build_path("/user/category_editcount/{project}/{username}/{categories}/{start}/{end}", (
+        ("project", project, ""),
+        ("username", username, ""),
+        ("categories", "|".join(categories), ""),
+        ("start", start, ""),
+        ("end", end, ""),
+    ))
+    return base.get(path)
 
 
 def log_counts(project: str, username: str) -> dict:
