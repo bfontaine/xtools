@@ -1,7 +1,7 @@
 # Based on:
 # https://github.com/coverallsapp/github-action/issues/4#issuecomment-529399410
 # https://github.com/aodj/icelandreview/blob/7d7a2937/.github/workflows/pythonpackage.yml
-name: pytest
+name: python-test
 
 on: [push]
 
@@ -12,12 +12,12 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.6, 3.7, 3.8, 3.9]
+        python-version: [3.6, 3.7, 3.8]
 
     steps:
     - uses: actions/checkout@v1
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
