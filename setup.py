@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name="xtools",
-      version="0.0.4",
+      version="0.1.0",
       author="Baptiste Fontaine",
       author_email="b@ptistefontaine.fr",
       description="XTools API wrapper",
@@ -13,7 +13,7 @@ setup(name="xtools",
       packages=['xtools'],
       # https://pypi.org/pypi?%3Aaction=list_classifiers
       classifiers=[
-          'Development Status :: 3 - Alpha',
+          'Development Status :: 4 - Beta',
           'Intended Audience :: Developers',
           'License :: OSI Approved :: MIT License',
           'Topic :: Software Development',
@@ -23,6 +23,5 @@ setup(name="xtools",
           'Programming Language :: Python :: 3.6',
           'Programming Language :: Python :: 3.7',
           'Programming Language :: Python :: 3.8',
-          'Programming Language :: Python :: 3.9',
           'Operating System :: OS Independent',
       ])

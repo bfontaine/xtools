@@ -1,5 +1,13 @@
 # `xtools` Changelog
 
+## 0.1.0 (2020/05/11)
+
+* Fix `user.steward_statistics` URL
+* Fix default namespaces in `user` functions
+* Retry up to 3 times on proxy errors
+* Exceptions can now be compared using `==`
+* Import exceptions under `xtools.*` (e.g. `xtools.NotFound` for `xtools.exceptions.NotFound`)
+
 ## 0.0.4 (2020/05/11)
 
 * Add full support for the User API
