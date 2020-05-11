@@ -200,4 +200,4 @@ def steward_statistics(project: str,
       ``global-unblock``, ``global-rename``, ``global-rights``, ``wiki-set-change``.
     :return:
     """
-    return _get_project_stats_dict("patroller_stats", project, start, end, actions)
+    return _get_project_stats_dict("steward_stats", project, start, end, actions)
