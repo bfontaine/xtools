@@ -33,7 +33,7 @@ def simple_edit_count(project: str, username: str,
 
     :param project:
     :param username:
-    :param namespace: one namespace (e.g. ``"0"`` for main; default) or ``"all"`` for all of them.
+    :param namespace: one namespace (default is ``"0"``, the main one) or ``"all"`` for all of them.
     :param start:
     :param end:
     :return:
@@ -79,7 +79,7 @@ def number_of_pages_created(project: str, username: str,
 
     :param project:
     :param username:
-    :param namespace: one namespace (e.g. ``"0"`` for main; default) or ``"all"`` for all of them.
+    :param namespace: one namespace (default is ``"0"``, the main one) or ``"all"`` for all of them.
     :param redirects: either ``"noredirects"`` (default), ``"onlyredirects"``, or ``"all"`` for both.
     :param deleted: either ``"live"``, ``"deleted"``, or ``"all"`` (default).
     :param start:
@@ -158,7 +158,7 @@ def pages_created(project: str, username: str,
 
     :param project:
     :param username:
-    :param namespace: one namespace (e.g. ``"0"`` for main; default) or ``"all"`` for all of them.
+    :param namespace: one namespace (default is ``"0"``, the main one) or ``"all"`` for all of them.
     :param redirects: either ``"noredirects"`` (default), ``"onlyredirects"``, or ``"all"`` for both.
     :param deleted: either ``"live"``, ``"deleted"``, or ``"all"`` (default).
     :param start:
@@ -217,12 +217,23 @@ def pages_created_iter(project: str, username: str,
     """
     Equivalent of ``pages_created`` that yields page dicts and does the pagination for you.
 
-    See ``pages_created`` for the arguments and sample return values.
+    See ``pages_created`` for sample return values.
 
     Example:
 
         >>> for page in pages_created_iter("enwiki", "Jimbo_Wales"):
         ...     print(page["page_title"])
+
+    :param project:
+    :param username:
+    :param namespace: one namespace (default is ``"0"``, the main one) or ``"all"`` for all of them.
+    :param redirects: either ``"noredirects"`` (default), ``"onlyredirects"``, or ``"all"`` for both.
+    :param deleted: either ``"live"``, ``"deleted"``, or ``"all"`` (default).
+    :param start:
+    :param end:
+    :param all_times: if ``True``, fetch all pages instead of the more recent ones. This overrides ``start``
+      and ``end``.
+    :return:
     """
     offset = 0
 
@@ -245,7 +256,7 @@ def automated_edit_counter(project: str, username: str,
 
     :param project:
     :param username:
-    :param namespace: one namespace (e.g. ``"0"`` for main; default) or ``"all"`` for all of them.
+    :param namespace: one namespace (default is ``"0"``, the main one) or ``"all"`` for all of them.
     :param start:
     :param end:
     :param tools:
