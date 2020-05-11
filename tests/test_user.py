@@ -4,6 +4,32 @@ from xtools import tests, user, exceptions
 
 
 class TestUser(tests.TestCase):
+    def test_simple_info(self):
+        for what, fn in (
+            ("simple_editcount", user.simple_edit_count),
+            ("pages_count", user.number_of_pages_created),
+            ("automated_editcount", user.automated_edit_counter),
+            ("nonautomated_edits", user.non_automated_edits),
+            ("automated_edits", user.automated_edits),
+            ("edit_summaries", user.edit_summaries),
+            ("top_edits", user.top_edits),
+            ("log_counts", user.log_counts),
+            ("namespace_totals", user.namespace_totals),
+            ("month_counts", user.month_counts),
+            ("timecard", user.time_card),
+        ):
+            prefix = "m://x/user/%s" % what
+
+            with requests_mock.Mocker() as m:
+                response = {"some": "info", "here": "too"}
+                m.get(prefix + "/enwiki/Albert_Einstein", json=response)
+                self.assertEqual(response, fn("enwiki", "Albert_Einstein"))
+
+                m.get(prefix + "/enwiki/no",
+                      json={"error": "The requested user does not exist"},
+                      status_code=404)
+                self.assertRaises(exceptions.NotFound, lambda: fn("enwiki", "no"))
+
     def test_pages_created_empty(self):
         with requests_mock.Mocker() as m:
             m.get("m://x/user/pages/project1/foo", json={"pages": {}})
