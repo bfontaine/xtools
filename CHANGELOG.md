@@ -1,5 +1,10 @@
 # `xtools` Changelog
 
+## Unreleased
+
+* Raise a `NotFound` exception instead of `BaseXToolsException` when a user
+  doesn’t exist
+
 ## 0.0.3 (2020/05/11)
 
 * Force the page titles in `user.page_created` as strings. The API sometimes

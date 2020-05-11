@@ -15,3 +15,9 @@ class TestUser(tests.TestCase):
             m.get("m://x/user/pages/project1/foo", json={"pages": {"0": {"page_title": 2040}}})
             self.assertEqual({"pages": [{"page_title": "2040"}]},
                              user.pages_created("project1", "foo"))
+
+    def test_pages_created_non_existing_user(self):
+        with requests_mock.Mocker() as m:
+            m.get("m://x/user/pages/project1/foo", json={"error": "The requested user does not exist"})
+            self.assertRaises(exceptions.NotFound,
+                              lambda: user.pages_created("project1", "foo"))
