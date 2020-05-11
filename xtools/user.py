@@ -99,6 +99,19 @@ def number_of_pages_created(project: str, username: str,
     return base.get(path)
 
 
+def _fix_page(page: dict) -> dict:
+    """
+    Fix a page dict as returned by the API.
+    :param page:
+    :return:
+    """
+    # Some (all?) pages with a number as their title have an int in this field.
+    # E.g. https://fr.wikipedia.org/wiki/2040.
+    if "page_title" in page:
+        page["page_title"] = str(page["page_title"])
+    return page
+
+
 def pages_created(project: str, username: str,
                   namespace: str = None,
                   redirects: Optional[str] = None,
@@ -187,9 +200,9 @@ def pages_created(project: str, username: str,
         pass
 
     if is_namespaced:
-        ret["pages"] = [page for k in keys for page in pages[k]]
+        ret["pages"] = [_fix_page(page) for k in keys for page in pages[k]]
     else:
-        ret["pages"] = [pages[k] for k in keys]
+        ret["pages"] = [_fix_page(pages[k]) for k in keys]
 
     return ret
 

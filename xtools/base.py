@@ -51,7 +51,15 @@ def error_exception(response: dict) -> Optional[BaseXToolsException]:
 
 
 def get(path: str, params=None):
+    """
+    Perform a GET request against the API.
+    :param path:
+    :param params:
+    :return:
+    """
     r = requests.get(url(path), params=params)
+    # Note: this sometimes fail but I can't reproduce the exact behavior for now.
+    # TODO better handle the error.
     response = r.json()
     exception = error_exception(response)
     if exception:
