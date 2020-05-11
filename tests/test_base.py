@@ -22,8 +22,25 @@ class TestPage(tests.TestCase):
             ("/x/b/c", "/{a}/{b}/{c}", [("a", "", "x"), ("b", "b", "x"), ("c", "c", "x")]),
             ("/a", "/{a}/{b}/{c}", [("a", "a", "x"), ("b", None, "x"), ("c", None, "x")]),
             ("/x/B", "/{a}/{b}/{c}", [("a", "", "x"), ("b", "B", "x"), ("c", "", "x")]),
+
+            ("/x/2000-01-01/a", "/{a}/{start}/{b}", [("a", "", "x"), ("start", "", ""), ("b", "a", "x")]),
+            ("/x/2050-12-31/a", "/{a}/{end}/{b}", [("a", "", "x"), ("end", "", ""), ("b", "a", "x")]),
         ):
             self.assertEqual(expected, base.build_path(path_format, path_params), path_format)
+
+    def test_error_exception(self):
+        for expected, response in (
+            (None, {}),
+            (exceptions.NotFound("foo"), {"error": {"code": 404, "message": "foo"}}),
+            (exceptions.BaseXToolsException("bar", 403), {"error": {"code": 403, "message": "bar"}}),
+
+            (exceptions.NotFound("No matching result"), {"error": "No matching result"}),
+            (exceptions.NotFound("X is not a valid project"), {"error": "X is not a valid project"}),
+            (exceptions.NotFound("The requested user does not exist"), {"error": "The requested user does not exist"}),
+            (exceptions.TooManyEdits("User has made too many edits!"), {"error": "User has made too many edits!"}),
+            (exceptions.BaseXToolsException("foobar"), {"error": "foobar"}),
+        ):
+            self.assertEqual(expected, base.error_exception(response), response)
 
     def test_get(self):
         with requests_mock.Mocker() as m:
