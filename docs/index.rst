@@ -26,6 +26,9 @@ Install
 Usage
 ~~~~~
 
+Functions are divided in four modules, exactly like the XTools API. They are also available under the top-level
+``xtools`` module: ``xtools.top_edits`` is the same as ``xtools.user.top_edits``, etc.
+
 
 ``xtools.project``
 ------------------
