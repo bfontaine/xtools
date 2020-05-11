@@ -51,7 +51,7 @@ def simple_edit_count(project: str, username: str,
 
 
 def number_of_pages_created(project: str, username: str,
-                            namespace: str = "all",
+                            namespace: Optional[str] = None,
                             redirects: Optional[str] = None,
                             deleted: Optional[str] = None,
                             start: Optional[date] = None,
@@ -247,9 +247,10 @@ def pages_created_iter(project: str, username: str,
 
 
 def automated_edit_counter(project: str, username: str,
-                           namespace: str = "all",
+                           namespace: Optional[str] = None,
                            start: Optional[date] = None,
                            end: Optional[date] = None,
+                           offset: Optional[int] = None,
                            tools: bool = False) -> dict:
     """
     https://xtools.readthedocs.io/en/stable/api/user.html#automated-edit-counter
@@ -259,6 +260,7 @@ def automated_edit_counter(project: str, username: str,
     :param namespace: one namespace (default is ``"0"``, the main one) or ``"all"`` for all of them.
     :param start:
     :param end:
+    :param offset:
     :param tools:
     :return:
     """
@@ -270,6 +272,7 @@ def automated_edit_counter(project: str, username: str,
             ("namespace", namespace, "0"),
             ("start", start, ""),
             ("end", end, ""),
+            ("offset", offset, ""),
             ("tools", "true" if tools else "", ""),
         ))
     return base.get(path)
@@ -295,7 +298,7 @@ def _edits(what: str, project: str, username: str, namespace: str = "0",
         ("what", what, ""),
         ("project", project, ""),
         ("username", username, ""),
-        ("namespace", namespace, ""),
+        ("namespace", namespace, "0"),
         ("start", start, ""),
         ("end", end, ""),
         ("offset", offset, ""),
@@ -303,7 +306,8 @@ def _edits(what: str, project: str, username: str, namespace: str = "0",
     return base.get(path)
 
 
-def non_automated_edits(project: str, username: str, namespace: str = "0",
+def non_automated_edits(project: str, username: str,
+                        namespace: Optional[str] = None,
                         start: Optional[date] = None,
                         end: Optional[date] = None,
                         offset: Optional[int] = None) -> dict:
@@ -322,7 +326,8 @@ def non_automated_edits(project: str, username: str, namespace: str = "0",
                   namespace=namespace, start=start, end=end, offset=offset)
 
 
-def automated_edits(project: str, username: str, namespace: str = "0",
+def automated_edits(project: str, username: str,
+                    namespace: Optional[str] = None,
                     start: Optional[date] = None,
                     end: Optional[date] = None,
                     offset: Optional[int] = None) -> dict:
@@ -342,7 +347,7 @@ def automated_edits(project: str, username: str, namespace: str = "0",
 
 
 def edit_summaries(project: str, username: str,
-                   namespace: str = "0",
+                   namespace: Optional[str] = None,
                    start: Optional[date] = None,
                    end: Optional[date] = None) -> dict:
     """
@@ -358,14 +363,16 @@ def edit_summaries(project: str, username: str,
     path = base.build_path("/user/edit_summaries/{project}/{username}/{namespace}/{start}/{end}", (
         ("project", project, ""),
         ("username", username, ""),
-        ("namespace", namespace, ""),
+        ("namespace", namespace, "0"),
         ("start", start, ""),
         ("end", end, ""),
     ))
     return base.get(path)
 
 
-def top_edits(project: str, username: str, namespace: str = "0", page_title: Optional[str] = None) -> dict:
+def top_edits(project: str, username: str,
+              namespace: Optional[str] = None,
+              page_title: Optional[str] = None) -> dict:
     """
     Return the top-edited pages by a user, or all edits made by a user to a specific page.
 
@@ -381,7 +388,7 @@ def top_edits(project: str, username: str, namespace: str = "0", page_title: Opt
     path = base.build_path("/user/top_edits/{project}/{username}/{namespace}/{article}", (
         ("project", project, ""),
         ("username", username, ""),
-        ("namespace", namespace, ""),
+        ("namespace", namespace, "0"),
         ("article", page_title, ""),
     ))
     return base.get(path)
