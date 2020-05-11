@@ -4,6 +4,7 @@ Internal base utilities.
 
 from typing import Optional, Tuple, Any, Sequence
 
+import time
 import requests
 from .exceptions import BaseXToolsException, NotFound, TooManyEdits
 
@@ -51,16 +52,23 @@ def error_exception(response: dict) -> Optional[BaseXToolsException]:
     return BaseXToolsException(str(error))
 
 
-def get(path: str, params=None):
+def get(path: str, params=None, retry=3, retry_delay=1):
     """
     Perform a GET request against the API.
     :param path:
     :param params:
+    :param retry:
+    :param retry_delay:
     :return:
     """
     r = requests.get(url(path), params=params)
-    # Note: this sometimes fail but I can't reproduce the exact behavior for now.
-    # TODO better handle the error.
+    # 'Proxy error'
+    if r.status_code == 502:
+        if retry > 0:
+            time.sleep(retry_delay)
+            return get(path, params, retry - 1)
+        r.raise_for_status()
+
     response = r.json()
     exception = error_exception(response)
     if exception:
