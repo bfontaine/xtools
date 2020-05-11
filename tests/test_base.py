@@ -48,10 +48,18 @@ class TestPage(tests.TestCase):
             m.get("m://x/foo", json=response)
             self.assertEqual(response, base.get("/foo"))
 
-    def test_get_502_one_retry(self):
+    def test_get_502(self):
         with requests_mock.Mocker() as m:
             response = {"foo": "bar"}
-            m.get("m://x/foo",
-                  [{"text": '<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">...', "status_code": 502},
-                   {"json": response}])
-            self.assertEqual(response, base.get("/foo"))
+
+            error = {"text": '<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">...', "status_code": 502}
+            ok = {"json": response}
+
+            m.get("m://x/foo1", [error, ok])
+            self.assertEqual(response, base.get("/foo1", retry_delay=0))
+
+            m.get("m://x/foo2", [error, error, ok])
+            self.assertEqual(response, base.get("/foo2", retry_delay=0))
+
+            m.get("m://x/fooX", [error])
+            self.assertRaises(Exception, lambda: base.get("/fooX", retry_delay=0))
