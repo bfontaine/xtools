@@ -1,5 +1,12 @@
 # `xtools` Changelog
 
+## 0.0.3 (2020/05/11)
+
+* Force the page titles in `user.page_created` as strings. The API sometimes
+  return them as ints (e.g. [2040][]).
+
+[2040]: https://fr.wikipedia.org/wiki/2040
+
 ## 0.0.2 (2020/05/10)
 
 * Fix `user.pages_created` and `user.pages_created_iter` for users with no

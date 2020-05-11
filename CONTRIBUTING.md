@@ -23,7 +23,7 @@ To release a new version:
 3. Fill the `CHANGELOG.md`
 4. Commit and tag
 5. Clean your `dist/` directory if it already exists
-6. Package the release: `python setup.py sdist bdist_wheel`
+6. Package the release: `python3 setup.py sdist bdist_wheel`
 7. Check the package: `twine check dist/*`
 8. Upload the package: `twine upload dist/*`
 9. Push
