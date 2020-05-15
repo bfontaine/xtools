@@ -1,4 +1,5 @@
 import requests_mock
+from requests.exceptions import HTTPError
 
 from xtools import tests, base, exceptions
 
@@ -47,6 +48,16 @@ class TestPage(tests.TestCase):
             response = {"foo": "bar"}
             m.get("m://x/foo", json=response)
             self.assertEqual(response, base.get("/foo"))
+
+    def test_get_404_json(self):
+        with requests_mock.Mocker() as m:
+            m.get("m://x/a", json={"error": {"code": 404, "message": "foo"}}, status_code=404)
+            self.assertRaises(exceptions.NotFound, lambda: base.get("/a"))
+
+    def test_get_404_html(self):
+        with requests_mock.Mocker() as m:
+            m.get("m://x/a", text='<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">...', status_code=404)
+            self.assertRaises(HTTPError, lambda: base.get("/a"))
 
     def test_get_502(self):
         with requests_mock.Mocker() as m:

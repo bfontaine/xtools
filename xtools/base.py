@@ -3,6 +3,7 @@ Internal base utilities.
 """
 
 from typing import Optional, Tuple, Any, Sequence
+from json.decoder import JSONDecodeError
 
 import time
 import requests
@@ -69,7 +70,12 @@ def get(path: str, params=None, retry=3, retry_delay=1):
             return get(path, params, retry - 1)
         r.raise_for_status()
 
-    response = r.json()
+    try:
+        response = r.json()
+    except JSONDecodeError as e:
+        r.raise_for_status()
+        raise e
+
     exception = error_exception(response)
     if exception:
         raise exception
