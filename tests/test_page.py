@@ -20,7 +20,7 @@ class TestPage(tests.TestCase):
                 self.assertEqual(response,
                                  fn("en.wikipedia.org", "Albert_Einstein"))
 
-                m.get(prefix + "/en.wikipedia.org/i don't exist lol",
+                m.get(prefix + "/en.wikipedia.org/i%20don%27t%20exist%20lol",
                       json={"error": "No matching results found for: i don't exist lol"},
                       status_code=404)
                 self.assertRaises(exceptions.NotFound,

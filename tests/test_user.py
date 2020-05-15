@@ -53,3 +53,11 @@ class TestUser(tests.TestCase):
                               lambda: user.pages_created("project1", "foo"))
             self.assertRaises(exceptions.NotFound,
                               lambda: next(user.pages_created_iter("project1", "foo")))
+
+    def test_pages_created_funky_username(self):
+        with requests_mock.Mocker() as m:
+            m.get("m://x/user/pages/project1/%3Fhello", json={"pages": {}})
+            self.assertEqual({"pages": []},
+                             user.pages_created("project1", "?hello"))
+            self.assertEqual([],
+                             list(user.pages_created_iter("project1", "?hello")))

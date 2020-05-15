@@ -27,6 +27,7 @@ class TestPage(tests.TestCase):
 
             ("/x/2000-01-01/a", "/{a}/{start}/{b}", [("a", "", "x"), ("start", "", ""), ("b", "a", "x")]),
             ("/x/2050-12-31/a", "/{a}/{end}/{b}", [("a", "", "x"), ("end", "", ""), ("b", "a", "x")]),
+            ("/x/%3F", "/{a}/{b}", [("a", "", "x"), ("b", "?", "")]),
         ):
             self.assertEqual(expected, base.build_path(path_format, path_params), path_format)
 

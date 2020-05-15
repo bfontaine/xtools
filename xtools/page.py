@@ -11,7 +11,11 @@ from . import base
 
 
 def _get_page_dict(what: str, project: str, article: str) -> dict:
-    return base.get("/page/%s/%s/%s" % (what, project, article))
+    return base.get(base.build_path("/page/{what}/{project}/{article}", (
+        ("what", what, ""),
+        ("project", project, ""),
+        ("article", article, ""),
+    )))
 
 
 def article_info(project: str, article: str) -> dict:
@@ -171,4 +175,7 @@ def assessments(project: str, articles: Sequence[str],
     if class_only:
         params["classonly"] = "1"
 
-    return base.get("/page/assessments/%s/%s" % (project, "|".join(articles)), params)
+    return base.get(base.build_path("/page/assessments/{project}/{articles}", (
+        ("project", project, ""),
+        ("articles", "|".join(articles), ""),
+    )), params)

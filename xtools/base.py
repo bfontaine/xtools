@@ -4,6 +4,7 @@ Internal base utilities.
 
 from typing import Optional, Tuple, Any, Sequence
 from json.decoder import JSONDecodeError
+from urllib.parse import quote as urlquote
 
 import time
 import requests
@@ -122,7 +123,7 @@ def build_path(path_format: str, params: Sequence[Tuple[str, Any, str]]) -> str:
                 elif name == "end":
                     param_value = END_TIME
 
-        params_dict[name] = param_value
+        params_dict[name] = urlquote(param_value)
 
     path = path_format.format(**params_dict).rstrip("/")
     return path
