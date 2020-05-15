@@ -1,5 +1,6 @@
 import requests_mock
 from requests.exceptions import HTTPError
+from json.decoder import JSONDecodeError
 
 from xtools import tests, base, exceptions
 
@@ -58,6 +59,12 @@ class TestPage(tests.TestCase):
         with requests_mock.Mocker() as m:
             m.get("m://x/a", text='<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">...', status_code=404)
             self.assertRaises(HTTPError, lambda: base.get("/a"))
+
+    def test_get_200_html(self):
+        # Shouldn't happen in practice, but let's be safe
+        with requests_mock.Mocker() as m:
+            m.get("m://x/a", text='<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">...')
+            self.assertRaises(JSONDecodeError, lambda: base.get("/a"))
 
     def test_get_502(self):
         with requests_mock.Mocker() as m:
