@@ -1,5 +1,10 @@
 # `xtools` Changelog
 
+## 0.1.2 (2020/05/15)
+
+* Fix an issue with usernames and page titles that contain URL-interpretable
+  characters
+
 ## 0.1.1 (2020/05/15)
 
 * Error HTTP responses that return HTML instead of JSON now raise a `requests`
