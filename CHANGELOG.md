@@ -1,5 +1,10 @@
 # `xtools` Changelog
 
+## 0.1.1 (2020/05/15)
+
+* Error HTTP responses that return HTML instead of JSON now raise a `requests`
+  exception rather than a `JSONDecodeError`
+
 ## 0.1.0 (2020/05/11)
 
 * Fix `user.steward_statistics` URL

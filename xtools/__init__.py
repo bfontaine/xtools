@@ -8,4 +8,4 @@ from .user import (simple_edit_count, number_of_pages_created, pages_created, pa
 
 from .exceptions import BaseXToolsException, NotFound, TooManyEdits
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"

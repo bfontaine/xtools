@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name="xtools",
-      version="0.1.0",
+      version="0.1.1",
       author="Baptiste Fontaine",
       author_email="b@ptistefontaine.fr",
       description="XTools API wrapper",
