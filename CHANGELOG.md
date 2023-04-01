@@ -1,6 +1,6 @@
 # `xtools` Changelog
 
-## 0.2.0 (unreleased)
+## 0.2.0 (2023/04/01)
 
 * Drop support for Python 3.5, 3.6 and 3.7
 * Use Poetry to manage the project
