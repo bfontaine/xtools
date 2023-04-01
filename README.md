@@ -1,5 +1,5 @@
 # xtools
-[![Version on Pypi](https://img.shields.io/pypi/v/xtools.svg?label=PyPI)](https://pypi.org/project/coveralls/)
+[![Version on Pypi](https://img.shields.io/pypi/v/xtools.svg?label=PyPI)](https://pypi.org/project/xtools/)
 [![Coverage Status](https://coveralls.io/repos/github/bfontaine/xtools/badge.svg?branch=master)](https://coveralls.io/github/bfontaine/xtools?branch=master)
 
 **xtools** is a Python wrapper around [XTools][]’ API.
