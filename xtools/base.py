@@ -31,7 +31,7 @@ def error_exception(response: dict) -> Optional[BaseXToolsException]:
     :return: ``None`` or a ``BaseXToolsException`` (or subclass) instance.
     """
     if "error" not in response:
-        return
+        return None
 
     error = response["error"]
 

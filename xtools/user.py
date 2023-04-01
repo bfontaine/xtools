@@ -4,7 +4,7 @@ Endpoints related to users.
 https://xtools.readthedocs.io/en/stable/api/user.html
 """
 
-from typing import Optional, Generator, Sequence
+from typing import Optional, Generator, Sequence, Union
 from datetime import date
 
 from . import base
@@ -113,11 +113,11 @@ def _fix_page(page: dict) -> dict:
 
 
 def pages_created(project: str, username: str,
-                  namespace: str = None,
+                  namespace: Optional[str] = None,
                   redirects: Optional[str] = None,
                   deleted: Optional[str] = None,
-                  start: Optional[date] = None,
-                  end: Optional[date] = None,
+                  start: Optional[Union[date, str]] = None,
+                  end: Optional[Union[date, str]] = None,
                   offset: Optional[int] = None,
                   all_times: bool = False) -> dict:
     """
@@ -161,8 +161,8 @@ def pages_created(project: str, username: str,
     :param namespace: one namespace (default is ``"0"``, the main one) or ``"all"`` for all of them.
     :param redirects: either ``"noredirects"`` (default), ``"onlyredirects"``, or ``"all"`` for both.
     :param deleted: either ``"live"``, ``"deleted"``, or ``"all"`` (default).
-    :param start:
-    :param end:
+    :param start: start date. Can be a ``date`` object or a string ``"YYYY-MM-DD"``.
+    :param end: end date. Can be a ``date`` object or a string ``"YYYY-MM-DD"``.
     :param offset:
     :param all_times: if ``True``, fetch all pages instead of the more recent ones. This overrides ``start``
       and ``end``.
@@ -208,7 +208,7 @@ def pages_created(project: str, username: str,
 
 
 def pages_created_iter(project: str, username: str,
-                       namespace: str = None,
+                       namespace: Optional[str] = None,
                        redirects: Optional[str] = None,
                        deleted: Optional[str] = None,
                        start: Optional[date] = None,
@@ -235,7 +235,7 @@ def pages_created_iter(project: str, username: str,
       and ``end``.
     :return:
     """
-    offset = 0
+    offset: Optional[int] = 0
 
     while offset is not None:
         ret = pages_created(project, username,
@@ -278,7 +278,7 @@ def automated_edit_counter(project: str, username: str,
     return base.get(path)
 
 
-def _edits(what: str, project: str, username: str, namespace: str = "0",
+def _edits(what: str, project: str, username: str, namespace: Optional[str] = None,
            start: Optional[date] = None,
            end: Optional[date] = None,
            offset: Optional[int] = None) -> dict:
