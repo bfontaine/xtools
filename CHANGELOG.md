@@ -2,7 +2,7 @@
 
 ## 0.2.0 (unreleased)
 
-* Drop support for Python 3.5 and 3.6
+* Drop support for Python 3.5, 3.6 and 3.7
 * Use Poetry to manage the project
 
 ## 0.1.2 (2020/05/15)
