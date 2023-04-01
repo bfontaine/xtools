@@ -1,4 +1,2 @@
-dist
-edn_format.egg-info/
-build
 _build
+

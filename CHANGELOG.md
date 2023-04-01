@@ -1,5 +1,10 @@
 # `xtools` Changelog
 
+## 0.2.0 (unreleased)
+
+* Drop support for Python 3.5 and 3.6
+* Use Poetry to manage the project
+
 ## 0.1.2 (2020/05/15)
 
 * Fix an issue with usernames and page titles that contain URL-interpretable

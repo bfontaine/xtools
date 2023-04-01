@@ -14,7 +14,7 @@ Note this project is not affiliated with nor endorsed by XTools.
 
 ### Requirements
 
-Python 3.5+.
+Python 3.7+.
 
 ## Usage
 
