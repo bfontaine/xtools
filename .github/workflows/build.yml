@@ -31,6 +31,8 @@ jobs:
       run: |
         poetry build
     - name: Run Tests
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         poetry run pytest --cov=xtools
-        poetry run coveralls
+        poetry run coveralls --service=github
