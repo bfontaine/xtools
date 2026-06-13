@@ -2,11 +2,11 @@
 
 ## Setup
 
-    poetry install
+    uv install
 
 ## Tests
 
-Run unit tests with:
+Run tests with:
 
-    poetry run pytest
+    ./ci.sh
 
