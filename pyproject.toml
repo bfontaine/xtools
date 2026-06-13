@@ -43,3 +43,26 @@ source-include = ["xtools/py.typed"]
 [build-system]
 requires = ["uv_build>=0.9.17,<0.10.0"]
 build-backend = "uv_build"
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+[tool.ruff.lint]
+select = [
+    "PERF",
+    "W",
+    "F",
+    "UP",
+    "ASYNC",
+    # "A",
+    # "B",
+    # "PT",
+    "C4",
+    "PIE800",
+    "SIM",
+    "SLOT",
+    "YTT",
+    "PLE",
+    "FURB",
+    "PLC0207",
+]

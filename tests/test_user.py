@@ -5,7 +5,7 @@ from xtools import user, exceptions
 
 
 @pytest.mark.parametrize(
-    "what,fn",
+    ("what", "fn"),
     [
         ("simple_editcount", user.simple_edit_count),
         ("pages_count", user.number_of_pages_created),
@@ -20,7 +20,7 @@ from xtools import user, exceptions
         ("timecard", user.time_card),
     ])
 def test_simple_info(what, fn):
-    prefix = "m://x/user/%s" % what
+    prefix = f"m://x/user/{what}"
 
     with requests_mock.Mocker() as m:
         response = {"some": "info", "here": "too"}

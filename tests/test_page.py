@@ -5,7 +5,7 @@ from xtools import page, exceptions
 
 
 @pytest.mark.parametrize(
-    "what,fn",
+    ("what", "fn"),
     [
         ("articleinfo", page.article_info),
         ("prose", page.prose),
@@ -14,7 +14,7 @@ from xtools import page, exceptions
         ("assessments", lambda p, a: page.assessments(p, [a]))
     ])
 def test_simple_info(what, fn):
-    prefix = "m://x/page/%s" % what
+    prefix = f"m://x/page/{what}"
 
     with requests_mock.Mocker() as m:
         response = {"some": "info", "here": "too"}

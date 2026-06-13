@@ -104,10 +104,7 @@ def build_path(path_format: str, params: Sequence[tuple[str, Any, str]]) -> str:
     params_dict: dict[str, str] = {}
 
     def has_more(index: int) -> bool:
-        for _, val, _ in params[index + 1:]:
-            if val:
-                return True
-        return False
+        return any(val for _, val, _ in params[index + 1:])
 
     for i, (name, value, default) in enumerate(params):
         if value:

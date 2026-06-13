@@ -8,6 +8,7 @@ https://xtools.readthedocs.io/en/stable/api/quote.html
 
 from collections import namedtuple
 from collections.abc import Sequence
+from urllib.parse import quote as urlquote
 
 from . import base
 
@@ -44,7 +45,7 @@ def single_quote(quote_id: int) -> Quote:
     :param quote_id:
     :return: Quote.
     """
-    return _get_quotes("/quote/%d" % quote_id)[0]
+    return _get_quotes(f"/quote/{urlquote(str(quote_id))}")[0]
 
 
 def all_quotes() -> Sequence[Quote]:

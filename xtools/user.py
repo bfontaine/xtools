@@ -9,6 +9,7 @@ from datetime import date
 from typing import Any
 
 from . import base
+import contextlib
 
 
 def simple_edit_count(project: str, username: str,
@@ -195,10 +196,8 @@ def pages_created(project: str, username: str,
     keys = sorted(pages.keys(), key=int)
 
     is_namespaced = False
-    try:
+    with contextlib.suppress(StopIteration):
         is_namespaced = isinstance(next(pages.values().__iter__()), list)
-    except StopIteration:
-        pass
 
     if is_namespaced:
         ret["pages"] = [_fix_page(page) for k in keys for page in pages[k]]
@@ -243,8 +242,7 @@ def pages_created_iter(project: str, username: str,
                             namespace=namespace, redirects=redirects, deleted=deleted,
                             start=start, end=end, all_times=all_times, offset=offset)
         offset = ret.get("continue")
-        for page in ret["pages"]:
-            yield page
+        yield from ret["pages"]
 
 
 def automated_edit_counter(project: str, username: str,
@@ -446,7 +444,7 @@ def log_counts(project: str, username: str) -> dict[str, Any]:
     :param username:
     :return:
     """
-    return base.get("/user/log_counts/%s/%s" % (project, username))
+    return base.get(f"/user/log_counts/{project}/{username}")
 
 
 def namespace_totals(project: str, username: str) -> dict[str, Any]:
@@ -459,7 +457,7 @@ def namespace_totals(project: str, username: str) -> dict[str, Any]:
     :param username:
     :return:
     """
-    return base.get("/user/namespace_totals/%s/%s" % (project, username))
+    return base.get(f"/user/namespace_totals/{project}/{username}")
 
 
 def month_counts(project: str, username: str) -> dict[str, Any]:
@@ -472,7 +470,7 @@ def month_counts(project: str, username: str) -> dict[str, Any]:
     :param username:
     :return:
     """
-    return base.get("/user/month_counts/%s/%s" % (project, username))
+    return base.get(f"/user/month_counts/{project}/{username}")
 
 
 def time_card(project: str, username: str) -> dict[str, Any]:
@@ -502,4 +500,4 @@ def time_card(project: str, username: str) -> dict[str, Any]:
     :param username:
     :return:
     """
-    return base.get("/user/timecard/%s/%s" % (project, username))
+    return base.get(f"/user/timecard/{project}/{username}")

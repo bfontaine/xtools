@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.abspath('..'))
 # -- Project information -----------------------------------------------------
 
 project = 'xtools'
-copyright = '2020, Baptiste Fontaine'
+copyright = '2020-2026, Baptiste Fontaine'
 author = 'Baptiste Fontaine'
 
 # The full version, including alpha/beta/rc tags

@@ -11,7 +11,7 @@ from . import base
 
 
 def _get_project_dict(what: str, project: str) -> dict[str, Any]:
-    return base.get("/project/%s/%s" % (what, project))
+    return base.get(f"/project/{what}/{project}")
 
 
 def normalize_project(project: str) -> dict[str, Any]:
@@ -175,11 +175,11 @@ def patroller_statistics(project: str,
 
     https://xtools.readthedocs.io/en/stable/api/project.html#patroller-statistics
 
-    :param project: 
-    :param start: 
-    :param end: 
+    :param project:
+    :param start:
+    :param end:
     :param actions: available actions include: ``patrol``, ``page-curation``, ``pc-accept``, ``pc-reject``.
-    :return: 
+    :return:
     """
     return _get_project_stats_dict("patroller_stats", project, start, end, actions)
 

@@ -5,7 +5,7 @@ from xtools import project, exceptions
 
 
 @pytest.mark.parametrize(
-    "what,fn",
+    ("what", "fn"),
     [
         ("normalize", project.normalize_project),
         ("namespaces", project.namespaces),
@@ -17,7 +17,7 @@ from xtools import project, exceptions
         ("steward_stats", project.steward_statistics),
     ])
 def test_simple_info(what, fn):
-    prefix = "m://x/project/%s" % what
+    prefix = f"m://x/project/{what}"
 
     with requests_mock.Mocker() as m:
         response = {"some": "info", "here": "too"}

@@ -7,7 +7,7 @@ from xtools import base, exceptions
 
 
 @pytest.mark.parametrize(
-    "expected,path_format,path_params",
+    ("expected", "path_format", "path_params"),
     [
         ("/foo", "/foo", []),
         ("/foo", "/{a}", [("a", "foo", "")]),
@@ -35,7 +35,7 @@ def test_build_path(expected, path_format, path_params):
 
 
 @pytest.mark.parametrize(
-    "expected, response",
+    ("expected", "response"),
     [
         (None, {}),
         (exceptions.NotFound("foo"), {"error": {"code": 404, "message": "foo"}}),
