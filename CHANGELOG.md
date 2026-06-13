@@ -2,6 +2,8 @@
 
 ## 0.3.0 (unreleased)
 
+* Add strict type hints
+* Add explicit exports of `xtools.*` functions
 * Drop support for Python 3.7, 3.8 and 3.9
 * Use uv to manage the project
 
