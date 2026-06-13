@@ -1,10 +1,10 @@
 # `xtools` Changelog
 
-## 0.3.0 (unreleased)
+## 0.3.0 (2026/04/13)
 
 * Add strict type hints
 * Add explicit exports of `xtools.*` functions
-* Drop support for Python 3.7, 3.8 and 3.9
+* Drop support for Python 3.8 and 3.9
 * Use uv to manage the project
 
 ## 0.2.0 (2023/04/01)

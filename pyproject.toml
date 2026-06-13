@@ -1,6 +1,6 @@
 [project]
 name = "xtools"
-version = "0.2.0"
+version = "0.3.0"
 description = "XTools API wrapper"
 authors = [{ name = "Baptiste Fontaine", email = "b@ptistefontaine.fr" }]
 requires-python = ">=3.10,<4.0"

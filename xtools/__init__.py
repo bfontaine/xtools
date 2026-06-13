@@ -7,7 +7,7 @@ from .user import (simple_edit_count, number_of_pages_created, pages_created, pa
                    automated_edit_counter, non_automated_edits, automated_edits, edit_summaries, top_edits,
                    category_edit_counter, log_counts, namespace_totals, month_counts, time_card)
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 
 __all__ = (
     "__version__", "article_info", "prose", "links", "top_editors", "assessments", "normalize_project", "namespaces",
