@@ -30,6 +30,7 @@ dev = [
     "sphinx>=8,<9",
     "requests-mock>=1.10,<2",
     "pytest-cov>=7,<8",
+    "ruff>=0.15.17",
 ]
 
 [tool.uv]
