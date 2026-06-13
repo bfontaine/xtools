@@ -4,16 +4,17 @@ Endpoints related to users.
 https://xtools.readthedocs.io/en/stable/api/user.html
 """
 
-from typing import Optional, Generator, Sequence, Union
+from collections.abc import Generator, Sequence
 from datetime import date
+from typing import Any
 
 from . import base
 
 
 def simple_edit_count(project: str, username: str,
-                      namespace: Optional[int] = None,
-                      start: Optional[date] = None,
-                      end: Optional[date] = None) -> dict:
+                      namespace: int | None = None,
+                      start: date | None = None,
+                      end: date | None = None) -> dict[str, Any]:
     """
     https://xtools.readthedocs.io/en/stable/api/user.html#simple-edit-count
 
@@ -51,11 +52,11 @@ def simple_edit_count(project: str, username: str,
 
 
 def number_of_pages_created(project: str, username: str,
-                            namespace: Optional[str] = None,
-                            redirects: Optional[str] = None,
-                            deleted: Optional[str] = None,
-                            start: Optional[date] = None,
-                            end: Optional[date] = None) -> dict:
+                            namespace: str | None = None,
+                            redirects: str | None = None,
+                            deleted: str | None = None,
+                            start: date | None = None,
+                            end: date | None = None) -> dict[str, Any]:
     """
     Return the number of pages created by a user along with some other info.
 
@@ -99,7 +100,7 @@ def number_of_pages_created(project: str, username: str,
     return base.get(path)
 
 
-def _fix_page(page: dict) -> dict:
+def _fix_page(page: dict[str, Any]) -> dict[str, Any]:
     """
     Fix a page dict as returned by the API.
     :param page:
@@ -113,13 +114,13 @@ def _fix_page(page: dict) -> dict:
 
 
 def pages_created(project: str, username: str,
-                  namespace: Optional[str] = None,
-                  redirects: Optional[str] = None,
-                  deleted: Optional[str] = None,
-                  start: Optional[Union[date, str]] = None,
-                  end: Optional[Union[date, str]] = None,
-                  offset: Optional[int] = None,
-                  all_times: bool = False) -> dict:
+                  namespace: str | None = None,
+                  redirects: str | None = None,
+                  deleted: str | None = None,
+                  start: date | str | None = None,
+                  end: date | str | None = None,
+                  offset: int | None = None,
+                  all_times: bool = False) -> dict[str, Any]:
     """
     Return pages created by a user. This does not handle pagination; see ``pages_created_iter`` for that.
 
@@ -208,12 +209,12 @@ def pages_created(project: str, username: str,
 
 
 def pages_created_iter(project: str, username: str,
-                       namespace: Optional[str] = None,
-                       redirects: Optional[str] = None,
-                       deleted: Optional[str] = None,
-                       start: Optional[date] = None,
-                       end: Optional[date] = None,
-                       all_times: bool = False) -> Generator[dict, None, None]:
+                       namespace: str | None = None,
+                       redirects: str | None = None,
+                       deleted: str | None = None,
+                       start: date | None = None,
+                       end: date | None = None,
+                       all_times: bool = False) -> Generator[dict[str, Any]]:
     """
     Equivalent of ``pages_created`` that yields page dicts and does the pagination for you.
 
@@ -235,7 +236,7 @@ def pages_created_iter(project: str, username: str,
       and ``end``.
     :return:
     """
-    offset: Optional[int] = 0
+    offset: int | None = 0
 
     while offset is not None:
         ret = pages_created(project, username,
@@ -247,11 +248,11 @@ def pages_created_iter(project: str, username: str,
 
 
 def automated_edit_counter(project: str, username: str,
-                           namespace: Optional[str] = None,
-                           start: Optional[date] = None,
-                           end: Optional[date] = None,
-                           offset: Optional[int] = None,
-                           tools: bool = False) -> dict:
+                           namespace: str | None = None,
+                           start: date | None = None,
+                           end: date | None = None,
+                           offset: int | None = None,
+                           tools: bool = False) -> dict[str, Any]:
     """
     https://xtools.readthedocs.io/en/stable/api/user.html#automated-edit-counter
 
@@ -278,10 +279,10 @@ def automated_edit_counter(project: str, username: str,
     return base.get(path)
 
 
-def _edits(what: str, project: str, username: str, namespace: Optional[str] = None,
-           start: Optional[date] = None,
-           end: Optional[date] = None,
-           offset: Optional[int] = None) -> dict:
+def _edits(what: str, project: str, username: str, namespace: str | None = None,
+           start: date | None = None,
+           end: date | None = None,
+           offset: int | None = None) -> dict[str, Any]:
     """
     Base function for both ``non_automated_edits`` and ``automated_edits``.
 
@@ -307,10 +308,10 @@ def _edits(what: str, project: str, username: str, namespace: Optional[str] = No
 
 
 def non_automated_edits(project: str, username: str,
-                        namespace: Optional[str] = None,
-                        start: Optional[date] = None,
-                        end: Optional[date] = None,
-                        offset: Optional[int] = None) -> dict:
+                        namespace: str | None = None,
+                        start: date | None = None,
+                        end: date | None = None,
+                        offset: int | None = None) -> dict[str, Any]:
     """
     https://xtools.readthedocs.io/en/stable/api/user.html#non-automated-edits
 
@@ -327,10 +328,10 @@ def non_automated_edits(project: str, username: str,
 
 
 def automated_edits(project: str, username: str,
-                    namespace: Optional[str] = None,
-                    start: Optional[date] = None,
-                    end: Optional[date] = None,
-                    offset: Optional[int] = None) -> dict:
+                    namespace: str | None = None,
+                    start: date | None = None,
+                    end: date | None = None,
+                    offset: int | None = None) -> dict[str, Any]:
     """
     https://xtools.readthedocs.io/en/stable/api/user.html#automated-edits
 
@@ -347,9 +348,9 @@ def automated_edits(project: str, username: str,
 
 
 def edit_summaries(project: str, username: str,
-                   namespace: Optional[str] = None,
-                   start: Optional[date] = None,
-                   end: Optional[date] = None) -> dict:
+                   namespace: str | None = None,
+                   start: date | None = None,
+                   end: date | None = None) -> dict[str, Any]:
     """
     https://xtools.readthedocs.io/en/stable/api/user.html#edit-summaries
 
@@ -371,8 +372,8 @@ def edit_summaries(project: str, username: str,
 
 
 def top_edits(project: str, username: str,
-              namespace: Optional[str] = None,
-              page_title: Optional[str] = None) -> dict:
+              namespace: str | None = None,
+              page_title: str | None = None) -> dict[str, Any]:
     """
     Return the top-edited pages by a user, or all edits made by a user to a specific page.
 
@@ -395,8 +396,8 @@ def top_edits(project: str, username: str,
 
 
 def category_edit_counter(project: str, username: str, categories: Sequence[str],
-                          start: Optional[date] = None,
-                          end: Optional[date] = None) -> dict:
+                          start: date | None = None,
+                          end: date | None = None) -> dict[str, Any]:
     """
     https://xtools.readthedocs.io/en/stable/api/user.html#category-edit-counter
 
@@ -417,7 +418,7 @@ def category_edit_counter(project: str, username: str, categories: Sequence[str]
     return base.get(path)
 
 
-def log_counts(project: str, username: str) -> dict:
+def log_counts(project: str, username: str) -> dict[str, Any]:
     """
     Return counts of logged actions made by a user.
 
@@ -448,7 +449,7 @@ def log_counts(project: str, username: str) -> dict:
     return base.get("/user/log_counts/%s/%s" % (project, username))
 
 
-def namespace_totals(project: str, username: str) -> dict:
+def namespace_totals(project: str, username: str) -> dict[str, Any]:
     """
     Return the edit count for each namespace with at least 1 edit.
 
@@ -461,7 +462,7 @@ def namespace_totals(project: str, username: str) -> dict:
     return base.get("/user/namespace_totals/%s/%s" % (project, username))
 
 
-def month_counts(project: str, username: str) -> dict:
+def month_counts(project: str, username: str) -> dict[str, Any]:
     """
     Return the edit count of a user, grouped by namespace then year and month.
 
@@ -474,7 +475,7 @@ def month_counts(project: str, username: str) -> dict:
     return base.get("/user/month_counts/%s/%s" % (project, username))
 
 
-def time_card(project: str, username: str) -> dict:
+def time_card(project: str, username: str) -> dict[str, Any]:
     """
     Return the relative distribution of edits made by a user based on hour of the day and day of the week.
 

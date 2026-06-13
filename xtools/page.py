@@ -4,13 +4,14 @@ Endpoints related to pages.
 https://xtools.readthedocs.io/en/stable/api/page.html
 """
 
-from typing import Optional, Sequence
+from collections.abc import Sequence
 from datetime import date
+from typing import Any
 
 from . import base
 
 
-def _get_page_dict(what: str, project: str, article: str) -> dict:
+def _get_page_dict(what: str, project: str, article: str) -> dict[str, Any]:
     return base.get(base.build_path("/page/{what}/{project}/{article}", (
         ("what", what, ""),
         ("project", project, ""),
@@ -18,7 +19,7 @@ def _get_page_dict(what: str, project: str, article: str) -> dict:
     )))
 
 
-def article_info(project: str, article: str) -> dict:
+def article_info(project: str, article: str) -> dict[str, Any]:
     """
     Return basic information about an article, such as page views, watchers, edits counts; author; assessment.
 
@@ -31,7 +32,7 @@ def article_info(project: str, article: str) -> dict:
     return _get_page_dict("articleinfo", project, article)
 
 
-def prose(project: str, article: str) -> dict:
+def prose(project: str, article: str) -> dict[str, Any]:
     """
     Return prose information about an article, such as references and words counts.
 
@@ -58,7 +59,7 @@ def prose(project: str, article: str) -> dict:
     return _get_page_dict("prose", project, article)
 
 
-def links(project: str, article: str) -> dict:
+def links(project: str, article: str) -> dict[str, Any]:
     """
     Return in and outgoing links counts of an article.
 
@@ -85,10 +86,10 @@ def links(project: str, article: str) -> dict:
 
 
 def top_editors(project: str, article: str,
-                start: Optional[date] = None,
-                end: Optional[date] = None,
-                limit: Optional[int] = None,
-                exclude_bots: bool = False) -> dict:
+                start: date | None = None,
+                end: date | None = None,
+                limit: int | None = None,
+                exclude_bots: bool = False) -> dict[str, Any]:
     """
     Get top editors on an article.
 
@@ -140,7 +141,7 @@ def top_editors(project: str, article: str,
 
 
 def assessments(project: str, articles: Sequence[str],
-                class_only: bool = False) -> dict:
+                class_only: bool = False) -> dict[str, Any]:
     """
     Get assessment data for the given articles.
 

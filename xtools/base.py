@@ -1,13 +1,14 @@
 """
 Internal base utilities.
 """
-
-from typing import Optional, Tuple, Any, Sequence
+import time
+from collections.abc import Sequence
 from json.decoder import JSONDecodeError
+from typing import Any
 from urllib.parse import quote as urlquote
 
-import time
 import requests
+
 from .exceptions import BaseXToolsException, NotFound, TooManyEdits
 
 BASE_URL = "https://xtools.wmflabs.org/api"
@@ -24,7 +25,7 @@ def url(path: str) -> str:
     return BASE_URL + path
 
 
-def error_exception(response: dict) -> Optional[BaseXToolsException]:
+def error_exception(response: dict[str, Any]) -> BaseXToolsException | None:
     """
     Return an optional Exception instance for an error response. Return ``None`` if the given response is not an error.
     :param response: response from the API.
@@ -54,7 +55,7 @@ def error_exception(response: dict) -> Optional[BaseXToolsException]:
     return BaseXToolsException(str(error))
 
 
-def get(path: str, params=None, retry=3, retry_delay=1):
+def get(path: str, params: dict[str, Any] | None = None, retry: int = 3, retry_delay: int = 1) -> dict[str, Any]:
     """
     Perform a GET request against the API.
     :param path:
@@ -72,7 +73,7 @@ def get(path: str, params=None, retry=3, retry_delay=1):
         r.raise_for_status()
 
     try:
-        response = r.json()
+        response: dict[str, Any] = r.json()
     except JSONDecodeError as e:
         r.raise_for_status()
         raise e
@@ -83,7 +84,7 @@ def get(path: str, params=None, retry=3, retry_delay=1):
     return response
 
 
-def build_path(path_format: str, params: Sequence[Tuple[str, Any, str]]) -> str:
+def build_path(path_format: str, params: Sequence[tuple[str, Any, str]]) -> str:
     """
     Build a path for the XTools API.
 
@@ -100,9 +101,9 @@ def build_path(path_format: str, params: Sequence[Tuple[str, Any, str]]) -> str:
     :param params:
     :return:
     """
-    params_dict = {}
+    params_dict: dict[str, str] = {}
 
-    def has_more(index):
+    def has_more(index: int) -> bool:
         for _, val, _ in params[index + 1:]:
             if val:
                 return True

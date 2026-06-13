@@ -6,8 +6,8 @@ A Quote is a named tuple with ``id`` and ``text`` fields.
 https://xtools.readthedocs.io/en/stable/api/quote.html
 """
 
-from typing import Sequence
 from collections import namedtuple
+from collections.abc import Sequence
 
 from . import base
 

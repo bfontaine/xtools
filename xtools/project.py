@@ -3,18 +3,18 @@ Endpoints related to projects.
 
 https://xtools.readthedocs.io/en/stable/api/project.html
 """
-
-from typing import Optional, Sequence
+from collections.abc import Sequence
 from datetime import date
+from typing import Any
 
 from . import base
 
 
-def _get_project_dict(what: str, project: str) -> dict:
+def _get_project_dict(what: str, project: str) -> dict[str, Any]:
     return base.get("/project/%s/%s" % (what, project))
 
 
-def normalize_project(project: str) -> dict:
+def normalize_project(project: str) -> dict[str, Any]:
     """
     https://xtools.readthedocs.io/en/stable/api/project.html#normalize-project
 
@@ -36,7 +36,7 @@ def normalize_project(project: str) -> dict:
     return _get_project_dict("normalize", project)
 
 
-def namespaces(project: str) -> dict:
+def namespaces(project: str) -> dict[str, Any]:
     """
     https://xtools.readthedocs.io/en/stable/api/project.html#namespaces
 
@@ -46,7 +46,7 @@ def namespaces(project: str) -> dict:
     return _get_project_dict("namespaces", project)
 
 
-def page_assessments(project: str) -> dict:
+def page_assessments(project: str) -> dict[str, Any]:
     """
     https://xtools.readthedocs.io/en/stable/api/project.html#page-assessments
 
@@ -56,7 +56,7 @@ def page_assessments(project: str) -> dict:
     return _get_project_dict("assessments", project)
 
 
-def page_assessments_configuration() -> dict:
+def page_assessments_configuration() -> dict[str, Any]:
     """
     Return the list of wikis that support page assessments and the configuration for each.
 
@@ -83,7 +83,7 @@ def page_assessments_configuration() -> dict:
     return base.get("/project/assessments")
 
 
-def automated_tools(project: str) -> dict:
+def automated_tools(project: str) -> dict[str, Any]:
     """
     Return a list of known (semi-)automated tools used on the project.
 
@@ -117,7 +117,7 @@ def automated_tools(project: str) -> dict:
     return _get_project_dict("automated_tools", project)
 
 
-def admins_and_user_groups(project: str) -> dict:
+def admins_and_user_groups(project: str) -> dict[str, Any]:
     """
     https://xtools.readthedocs.io/en/stable/api/project.html#admins-and-user-groups
 
@@ -128,9 +128,9 @@ def admins_and_user_groups(project: str) -> dict:
 
 
 def _get_project_stats_dict(what: str, project: str,
-                            start: Optional[date] = None,
-                            end: Optional[date] = None,
-                            actions: Optional[Sequence[str]] = None) -> dict:
+                            start: date | None = None,
+                            end: date | None = None,
+                            actions: Sequence[str] | None = None) -> dict[str, Any]:
     path = base.build_path("/project/{what}/{project}/{start}/{end}", (
         ("what", what, ""),
         ("project", project, ""),
@@ -146,9 +146,9 @@ def _get_project_stats_dict(what: str, project: str,
 
 
 def admin_statistics(project: str,
-                     start: Optional[date] = None,
-                     end: Optional[date] = None,
-                     actions: Optional[Sequence[str]] = None) -> dict:
+                     start: date | None = None,
+                     end: date | None = None,
+                     actions: Sequence[str] | None = None) -> dict[str, Any]:
     """
     Return admin users of the project with counts of the actions they took.
 
@@ -167,9 +167,9 @@ def admin_statistics(project: str,
 
 
 def patroller_statistics(project: str,
-                         start: Optional[date] = None,
-                         end: Optional[date] = None,
-                         actions: Optional[Sequence[str]] = None) -> dict:
+                         start: date | None = None,
+                         end: date | None = None,
+                         actions: Sequence[str] | None = None) -> dict[str, Any]:
     """
     Same as ``admin_statistics`` with different actions.
 
@@ -185,9 +185,9 @@ def patroller_statistics(project: str,
 
 
 def steward_statistics(project: str,
-                       start: Optional[date] = None,
-                       end: Optional[date] = None,
-                       actions: Optional[Sequence[str]] = None) -> dict:
+                       start: date | None = None,
+                       end: date | None = None,
+                       actions: Sequence[str] | None = None) -> dict[str, Any]:
     """
     Same as ``admin_statistics`` with different actions.
 
